@@ -106,10 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-
-# CEST for Daylight Saving Time (DST)
-# CET for standard time (STD)
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Etc/GMT-1'
 
 USE_I18N = True
 
