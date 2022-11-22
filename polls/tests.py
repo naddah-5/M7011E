@@ -123,3 +123,12 @@ class QuestionModelTests(TestCase):
 # currently on page 53
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
+        """
+        The detail view of a question with a pub_date in the future returns a 404 not found.
+        """
+        future_question: Question = create_question(new_question_text='Future question', offset_days=30)
+        # Note that the id has to be in the form of a string for djangos reverse() function.
+        future_question_id: str = str(future_question.id)
+        url: str = reverse('polls:detail', args=(future_question_id))
+        response: HttpResponse = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
