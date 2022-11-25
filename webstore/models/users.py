@@ -12,11 +12,11 @@ class Users(models.Model):
         (ADMIN, 'Admin'),
         (SUPERUSER, 'Superuser'),
     ]
-    ID: models.BigAutoField = models.BigAutoField(primary_key=True)
-    Email: models.EmailField = models.EmailField()
-    Create_Time: models.DateTimeField = models.DateTimeField()
-    Password_ID: models.ForeignKey = models.ForeignKey(Passwords, on_delete=models.CASCADE)
-    Role: models.CharField = models.CharField(
+    id: models.BigAutoField = models.BigAutoField(primary_key=True)
+    email: models.EmailField = models.EmailField()
+    create_time: models.DateTimeField = models.DateTimeField()
+    password: models.ForeignKey = models.ForeignKey(Passwords, on_delete=models.CASCADE)
+    role: models.CharField = models.CharField(
         max_length=2,
         choices=ROLE,
         default=CUSTOMER,

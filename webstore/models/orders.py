@@ -17,13 +17,13 @@ class Orders(models.Model):
         (DELIVERED, 'Delivered'),
     ]
 
-    ID: models.BigAutoField = models.BigAutoField(primary_key=True)
-    Order_Date: models.DateTimeField = models.DateTimeField()
-    Customer_ID: models.ForeignKey = models.ForeignKey(Users, on_delete=models.CASCADE)
-    Address: models.TextField = models.TextField()
-    Status: models.CharField = models.CharField(
+    id: models.BigAutoField = models.BigAutoField(primary_key=True)
+    order_date: models.DateTimeField = models.DateTimeField()
+    customer: models.ForeignKey = models.ForeignKey(Users, on_delete=models.CASCADE)
+    address: models.TextField = models.TextField()
+    status: models.CharField = models.CharField(
         max_length=2,
         choices=STATUS,
         default=PROCESSING,
     )
-    Delivery: models.DateTimeField = models.DateTimeField(blank=True)
+    delivery: models.DateTimeField = models.DateTimeField(blank=True)
