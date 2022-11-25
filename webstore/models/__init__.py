@@ -20,3 +20,4 @@ from .reviews import Reviews
 from .categories import Categories
 from .subcategories import Subcategories
 from .in_categories import InCategories
+from .in_subcategory import InSubcategory
