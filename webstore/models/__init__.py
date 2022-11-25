@@ -16,3 +16,4 @@ from .orders import Orders
 from .products import Products
 from .order_product import OrderProducts
 from .cart_product import CartProducts
+from .reviews import Reviews
