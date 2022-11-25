@@ -13,3 +13,4 @@ from .<file (no .py)> import <class name>
 from .passwords import Passwords
 from .users import Users
 from .orders import Orders
+from .products import Products
