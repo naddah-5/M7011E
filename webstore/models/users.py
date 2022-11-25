@@ -1,21 +1,22 @@
 from django.db import models
 from .passwords import Passwords
+from typing import Literal
 
 class Users(models.Model):
-    CUSTOMER = 'CM'
-    ADMIN = 'AD'
-    SUPERUSER = 'SU'
+    CUSTOMER: Literal['CM'] = 'CM'
+    ADMIN:  Literal['AD'] = 'AD'
+    SUPERUSER: Literal['SU'] = 'SU'
     
-    ROLE = [
+    ROLE: list[tuple] = [
         (CUSTOMER, 'Customer'),
         (ADMIN, 'Admin'),
         (SUPERUSER, 'Superuser'),
     ]
-    ID = models.BigAutoField(primary_key=True)
-    Email = models.EmailField()
-    Create_Time = models.DateTimeField()
-    Password_ID = models.ForeignKey(Passwords, on_delete=models.CASCADE)
-    Role = models.CharField(
+    ID: models.BigAutoField = models.BigAutoField(primary_key=True)
+    Email: models.EmailField = models.EmailField()
+    Create_Time: models.DateTimeField = models.DateTimeField()
+    Password_ID: models.ForeignKey = models.ForeignKey(Passwords, on_delete=models.CASCADE)
+    Role: models.CharField = models.CharField(
         max_length=2,
         choices=ROLE,
         default=CUSTOMER,
