@@ -12,7 +12,6 @@ class Users(models.Model):
         (ADMIN, 'Admin'),
         (SUPERUSER, 'Superuser'),
     ]
-    id: models.BigAutoField = models.BigAutoField(primary_key=True)
     email: models.EmailField = models.EmailField()
     create_time: models.DateTimeField = models.DateTimeField()
     password: models.ForeignKey = models.ForeignKey(Passwords, on_delete=models.CASCADE)

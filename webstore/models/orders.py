@@ -17,7 +17,6 @@ class Orders(models.Model):
         (DELIVERED, 'Delivered'),
     ]
 
-    id: models.BigAutoField = models.BigAutoField(primary_key=True)
     order_date: models.DateTimeField = models.DateTimeField()
     customer: models.ForeignKey = models.ForeignKey(Users, on_delete=models.CASCADE)
     address: models.TextField = models.TextField()
