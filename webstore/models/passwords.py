@@ -1,6 +1,6 @@
 from django.db import models
 
-from users import Users
+from .users import Users
 
 class Passwords(models.Model):
     hash: models.TextField = models.TextField()
