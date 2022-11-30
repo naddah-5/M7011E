@@ -1,5 +1,6 @@
 from django.db import models
 from typing import Literal
+import datetime
 
 class Users(models.Model):
     CUSTOMER: Literal['CM'] = 'CM'
@@ -18,3 +19,6 @@ class Users(models.Model):
         choices=ROLE,
         default=CUSTOMER,
     )
+
+    def __str__(self) -> models.EmailField:
+        return self.email
