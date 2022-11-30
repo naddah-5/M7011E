@@ -4,8 +4,8 @@ from .orders import Orders
 from .products import Products
 
 class OrderProducts(models.Model):
-    product: models.ForeignKey = models.ForeignKey(Products, on_delete=models.CASCADE)
-    order: models.ForeignKey = models.ForeignKey(Orders, on_delete=models.CASCADE)
+    product: models.ForeignKey = models.ForeignKey(Products, on_delete=models.DO_NOTHING)
+    order: models.ForeignKey = models.ForeignKey(Orders, on_delete=models.DO_NOTHING)
     quantity: models.IntegerField = models.IntegerField(default=1)
     price: models.DecimalField = models.DecimalField(decimal_places=2, max_digits=16)
     
