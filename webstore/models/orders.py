@@ -18,7 +18,7 @@ class Orders(models.Model):
     ]
 
     order_date: models.DateTimeField = models.DateTimeField()
-    customer: models.ForeignKey = models.ForeignKey(Users, on_delete=models.CASCADE)
+    customer: models.ForeignKey = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
     address: models.TextField = models.TextField()
     status: models.CharField = models.CharField(
         max_length=2,
