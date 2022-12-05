@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #'webstore.apps.WebstoreConfig',
+    'webstore',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
