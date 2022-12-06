@@ -34,4 +34,4 @@ def login(request):
         pass1 = request.POST["pass1"]
 
         # Authenticate och logga in
-    return render(request, 'pages/login.html', context=context)
+    return render(request, 'pages/login.html')
