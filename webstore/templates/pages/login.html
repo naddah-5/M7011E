@@ -1,0 +1,30 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  Login page.
+{% endblock %}
+
+{% block keywords %}
+  login
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<h3>Log In to your account!</h3>
+    <form method="post" action="/login" class="mb-2">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Your Email" Required>
+        </div>
+        <div class="form-group">
+            <label for="pass1">Password</label>
+            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Your Password" Required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+{% endblock %}
