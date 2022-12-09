@@ -1,5 +1,5 @@
 from django.db import models
-from .users import Users
+from django.contrib.auth import get_user_model
 from typing import Literal
 
 class Orders(models.Model):
@@ -18,7 +18,7 @@ class Orders(models.Model):
     ]
 
     order_date: models.DateTimeField = models.DateTimeField()
-    customer: models.ForeignKey = models.ForeignKey(Users, on_delete=models.DO_NOTHING)
+    customer: models.ForeignKey = models.ForeignKey(get_user_model(), on_delete=models.DO_NOTHING)
     address: models.TextField = models.TextField()
     status: models.CharField = models.CharField(
         max_length=2,

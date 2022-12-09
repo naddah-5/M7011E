@@ -10,8 +10,7 @@ from .<file (no .py)> import <class name>
 
 """
 
-from .passwords import Passwords
-from .users import Users
+from .user_profiles import UserProfiles
 from .orders import Orders
 from .products import Products
 from .order_product import OrderProducts
