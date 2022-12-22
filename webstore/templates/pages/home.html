@@ -1,11 +1,11 @@
 {% extends 'layouts/public_base.html' %}
 {% load static %}
 {% block description %}
-  Learn django by doing, practice on real world projects
+  Home page description
 {% endblock %}
 
 {% block keywords %}
-  Learn by doing
+  Webstore home page
 {% endblock %}
 
 {% block title %}
@@ -13,61 +13,6 @@
 {% endblock %}
 
 {% block content %}
-
-<style>
-  .bd-placeholder-img {
-    font-size: 1.125rem;
-    text-anchor: middle;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-  }
-
-  @media (min-width: 768px) {
-    .bd-placeholder-img-lg {
-      font-size: 3.5rem;
-    }
-  }
-
-  .b-example-divider {
-    height: 3rem;
-    background-color: rgba(0, 0, 0, .1);
-    border: solid rgba(0, 0, 0, .15);
-    border-width: 1px 0;
-    box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-  }
-
-  .b-example-vr {
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 100vh;
-  }
-
-  .bi {
-    vertical-align: -.125em;
-    fill: currentColor;
-  }
-
-  .nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
-  }
-
-  .nav-scroller .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-</style>
-
-
 
   <section class="py-5 text-center">
     <div class="row py-lg-5">
@@ -83,13 +28,18 @@
   </section>
 
 
-  <div class="album py-5 bg-light">
-    <div class="container">
+<!-- Products -->
+<div class="row mx-n2 mx-sm-n3">
+  <div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+  <!-- Product -->
+  <div class="card text-center h-100">
+    <div class="position-relative">
+      <img class="card-img-top" src="{% static "webstore/media/book.jpg" %}" alt="Image Description">
 
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <div class="col">
-          <div class="card shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+      <div class="position-absolute top-0 left-0 pt-3 pl-3">
+        <span class="badge badge-success badge-pill">New arrival</span>
+      </div>
+    </div>
 
     <div class="card-body pt-4 px-4 pb-0">
       <div class="mb-2">
@@ -295,6 +245,144 @@
         </div>
       </div>
     </div>
-  </div>
 
+    <div class="card-footer border-0 pt-0 pb-4 px-4">
+      <div class="mb-3">
+        <a class="d-inline-flex align-items-center small" href="#">
+          <div class="text-warning mr-2">
+            <small class="far fa-star text-muted"></small>
+            <small class="far fa-star text-muted"></small>
+            <small class="far fa-star text-muted"></small>
+            <small class="far fa-star text-muted"></small>
+            <small class="far fa-star text-muted"></small>
+          </div>
+          <span class="text-secondary">0</span>
+        </a>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover">Add to Cart</button>
+    </div>
+  </div>
+  <!-- End Product -->
+</div>
+
+<div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+  <!-- Product -->
+  <div class="card text-center h-100">
+    <div class="position-relative">
+      <img class="card-img-top" src="{% static "webstore/media/book.jpg" %}" alt="Image Description">
+    </div>
+
+    <div class="card-body pt-4 px-4 pb-0">
+      <div class="mb-2">
+        <a class="d-inline-block text-secondary small font-weight-medium mb-1" href="#">Clothing</a>
+        <h4 class="font-size-1 font-weight-normal">
+          <a class="text-secondary" href="#">Front hoodie</a>
+        </h4>
+        <div class="d-block">
+          <span class="font-weight-medium">$91.88</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer border-0 pt-0 pb-4 px-4">
+      <div class="mb-3">
+        <a class="d-inline-flex align-items-center small" href="#">
+          <div class="text-warning mr-2">
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="far fa-star text-muted"></small>
+          </div>
+          <span class="text-secondary">40</span>
+        </a>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover">Add to Cart</button>
+    </div>
+  </div>
+  <!-- End Product -->
+</div>
+
+<div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+  <!-- Product -->
+  <div class="card text-center h-100">
+    <div class="position-relative">
+      <img class="card-img-top" src="{% static "webstore/media/book.jpg" %}" alt="Image Description">
+
+      <div class="position-absolute top-0 left-0 pt-3 pl-3">
+        <span class="badge badge-danger badge-pill">Sold out</span>
+      </div>
+    </div>
+
+    <div class="card-body pt-4 px-4 pb-0">
+      <div class="mb-2">
+        <a class="d-inline-block text-secondary small font-weight-medium mb-1" href="#">Accessories</a>
+        <h4 class="font-size-1 font-weight-normal">
+          <a class="text-secondary" href="#">Herschel backpack in gray</a>
+        </h4>
+        <div class="d-block font-size-1">
+          <span class="font-weight-medium">$29.99</span>
+          <span class="text-secondary ml-1"><del>$33.99</del></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer border-0 pt-0 pb-4 px-4">
+      <div class="mb-3">
+        <a class="d-inline-flex align-items-center small" href="#">
+          <div class="text-warning mr-2">
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="far fa-star text-muted"></small>
+            <small class="far fa-star text-muted"></small>
+          </div>
+          <span class="text-secondary">125</span>
+        </a>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover">Add to Cart</button>
+    </div>
+  </div>
+  <!-- End Product -->
+</div>
+
+<div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+  <!-- Product -->
+  <div class="card text-center h-100">
+    <div class="position-relative">
+      <img class="card-img-top" src="{% static "webstore/media/book.jpg" %}" alt="Image Description">
+    </div>
+
+    <div class="card-body pt-4 px-4 pb-0">
+      <div class="mb-2">
+        <a class="d-inline-block text-secondary small font-weight-medium mb-1" href="#">Clothing</a>
+        <h4 class="font-size-1 font-weight-normal">
+          <a class="text-secondary" href="#">Front Originals adicolor t-shirt with trefoil logo</a>
+        </h4>
+        <div class="d-block">
+          <span class="font-weight-medium">$38.00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer border-0 pt-0 pb-4 px-4">
+      <div class="mb-3">
+        <a class="d-inline-flex align-items-center small" href="#">
+          <div class="text-warning mr-2">
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+            <small class="fas fa-star"></small>
+          </div>
+          <span class="text-secondary">9</span>
+        </a>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover">Add to Cart</button>
+    </div>
+  </div>
+  <!-- End Product -->
+</div>
+</div>
+<!-- End Products -->
 {% endblock %}
