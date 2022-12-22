@@ -25,4 +25,4 @@ class Orders(models.Model):
         choices=STATUS,
         default=PROCESSING,
     )
-    delivery: models.DateTimeField = models.DateTimeField(blank=True)
+    delivery: models.DateTimeField = models.DateTimeField(blank=True, null=True)
