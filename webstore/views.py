@@ -35,3 +35,9 @@ def login(request):
 
         # Authenticate och logga in
     return render(request, 'pages/login.html')
+
+def product_details(request):
+    context = {
+        'title': 'Product'
+    }
+    return render(request, 'pages/product_detail.html', context=context)
