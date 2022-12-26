@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'm7011e.wsgi.application'
 
 
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 # Database
