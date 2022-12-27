@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
 from django.views import View
+from django.views.generic import CreateView
 
 from webstore.forms import NewUserForm, UserForm
+from webstore.models import Product
 
 # Create your views here.
 def home(request):

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from typing import Literal
 
-class Orders(models.Model):
+class Order(models.Model):
     PROCESSING: Literal['PS'] = 'PS'
     PACKAGING: Literal['PG'] = 'PG'
     SHIPPING: Literal['SH'] = 'SH'
