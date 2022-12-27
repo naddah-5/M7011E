@@ -57,6 +57,7 @@ class Register(View):
 class CreateProduct(CreateView):
     form_class = ProductForm
     template_name = 'pages/create_product.html'
+    # TODO: Add redirect to the added product.
     success_url = '/'
 
     def form_valid(self, form):
