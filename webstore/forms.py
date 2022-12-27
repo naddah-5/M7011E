@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 
-from webstore.models import UserProfile
+from webstore.models import UserProfile, Product
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -26,6 +26,11 @@ class NewUserForm(UserCreationForm):
                 user.save()
                 UserProfile.objects.create(user=user)
             return user
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'stock', 'thumbnail']
 
 class UserForm(forms.ModelForm):
     class Meta:

@@ -3,7 +3,7 @@ from typing import Literal
 from .product import Product
 from .category import Category
 
-class InCategorie(models.Model):
+class InCategory(models.Model):
     product: models.ForeignKey = models.ForeignKey(Product, on_delete=models.CASCADE)
     category: models.ForeignKey = models.ForeignKey(Category, on_delete=models.CASCADE)
 

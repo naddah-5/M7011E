@@ -18,5 +18,5 @@ from .cart_product import CartProduct
 from .review import Review
 from .category import Category
 from .subcategory import Subcategory
-from .in_categorie import InCategorie
+from .in_category import InCategory
 from .in_subcategory import InSubcategory
