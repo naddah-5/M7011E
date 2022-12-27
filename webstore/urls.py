@@ -9,8 +9,9 @@ app_name = 'webstore'
 urlpatterns = [
     path('', home, name = 'home'),
     path('about-us', about_us, name = 'about_us'),
-    path('login/', LoginView.as_view(template_name='pages/login.html'), name = 'login'),
     path('register/', Register.as_view(), name = 'register'),
+    path('login/', LoginView.as_view(template_name='pages/login.html'), name = 'login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('product-detail/', product_details, name = 'product_details'),
 ]
 
