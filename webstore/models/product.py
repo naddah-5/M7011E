@@ -1,6 +1,6 @@
 from django.db import models
 
-class Products(models.Model):
+class Product(models.Model):
     name: models.TextField = models.TextField(max_length=255)
     description: models.TextField = models.TextField(blank=True, null=True)
     price: models.DecimalField = models.DecimalField(decimal_places=2, max_digits=16)

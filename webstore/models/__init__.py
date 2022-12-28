@@ -10,14 +10,13 @@ from .<file (no .py)> import <class name>
 
 """
 
-from .passwords import Passwords
-from .users import Users
-from .orders import Orders
-from .products import Products
-from .order_product import OrderProducts
-from .cart_product import CartProducts
-from .reviews import Reviews
-from .categories import Categories
-from .subcategories import Subcategories
-from .in_categories import InCategories
+from .user_profile import UserProfile
+from .order import Order
+from .product import Product
+from .order_product import OrderProduct
+from .cart_product import CartProduct
+from .review import Review
+from .category import Category
+from .subcategory import Subcategory
+from .in_category import InCategory
 from .in_subcategory import InSubcategory

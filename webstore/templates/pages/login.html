@@ -1,30 +1,58 @@
-{% extends 'layouts/public_base.html' %}
-{% load static %}
-{% block description %}
-  Login page.
-{% endblock %}
+<!--
+  Based on the example login code from Sandeep Patil
+-->
 
-{% block keywords %}
-  login
-{% endblock %}
+{% extends "layouts/public_base.html" %}
 
 {% block title %}
-  {{ title }}
+  Login
+{% endblock %}
+
+{% block page-header %}
+    Please Login
 {% endblock %}
 
 {% block content %}
-<h3>Log In to your account!</h3>
-    <form method="post" action="/login" class="mb-2">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="text" class="form-control" id="email" name="email" placeholder="Enter Your Email" Required>
-        </div>
-        <div class="form-group">
-            <label for="pass1">Password</label>
-            <input type="password" class="form-control" id="pass1" name="pass1" placeholder="Enter Your Password" Required>
-        </div>
+  <div class="row py-5">
+    <div class="col-xs-12">
 
-        <button type="submit" class="btn btn-primary">Log In</button>
-    </form>
+      <!-- log in form -->
+      <div class="form">
+        <form method="post" action="{% url 'webstore:login' %}">
+          {% csrf_token %}
+          
+          <div class="form-group">
+            <label class="control-label" for="signin-username">Username</label>
+            <input class="form-control" type="text" id="signin-username"
+                    placeholder="Username" name="username"
+                    value="{{ form.username.value|default_if_none:"" }}">
+          </div>
+
+          <div class="form-group">
+            <label class="control-label"
+                    for="signin-password">Password</label>
+            <input class="form-control" type="password" placeholder="Password"
+                    name="password">
+          </div>
+          {% if form.errors %}
+            <div class="form-group has-error">
+              <div class="control-label">
+                <span>Your username and password didn't match. Please try again.</span>
+              </div>
+            </div>
+          {% endif %}
+
+          <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit"
+                    value="Login">
+          </div>
+          <input type="hidden" name="next" value="{{ next }}"/>
+        </form>
+
+        <p class="message">Not registered? <a href="{% url 'webstore:register' %}">Create
+          an account</a></p>
+        <hr />
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -1,4 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views import View
+from django.views.generic import CreateView
+
+from webstore.forms import NewUserForm, UserForm, ProductForm
+from webstore.models import Product
 
 # Create your views here.
 def home(request):
@@ -15,23 +20,52 @@ def about_us(request):
     }
     return render(request, 'pages/about_us.html', context=context)
 
-def register(request):
-    if request.method == "POST":
-        username = request.POST["username"]
-        email = request.POST["email"]
-        pass1 = request.POST["pass1"]
-        pass2 = request.POST["pass2"]
+class Register(View):
+    """
+    Create a new user as well as the user profile.
+    """
+    
+    def get(self, request):
+        """
+        Show the NewUserForm.
+        """
+        context = {
+            'form': NewUserForm
+        }
+        return render(request, 'pages/register.html', context)
 
-        # 
+    def post(self, request):
+        """
+        Handles the submitted NewUserForm.
+        """
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            """
+            Assuming that the data is valid, the new user is created and we redirect.
+            """
+            form.save()
+            return redirect('/')
+        
+        context = {
+            'form': form
+        }
+        """
+        If the form is invalid we redirect back to the register page with the form as context.
+        """
+        return render(request, 'pages/register.html', context)
 
-        print(username + " " + email)
+class CreateProduct(CreateView):
+    form_class = ProductForm
+    template_name = 'pages/create_product.html'
+    # TODO: Add redirect to the added product.
+    success_url = '/'
 
-    return render(request, 'pages/register.html')
+    def form_valid(self, form):
+        form.save()
+        return redirect(self.success_url)
 
-def login(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        pass1 = request.POST["pass1"]
-
-        # Authenticate och logga in
-    return render(request, 'pages/login.html')
+def product_details(request):
+    context = {
+        'title': 'Product'
+    }
+    return render(request, 'pages/product_detail.html', context=context)

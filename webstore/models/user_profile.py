@@ -1,8 +1,8 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from typing import Literal
-import datetime
 
-class Users(models.Model):
+class UserProfile(models.Model):
     CUSTOMER: Literal['CM'] = 'CM'
     ADMIN:  Literal['AD'] = 'AD'
     SUPERUSER: Literal['SU'] = 'SU'
@@ -12,13 +12,19 @@ class Users(models.Model):
         (ADMIN, 'Admin'),
         (SUPERUSER, 'Superuser'),
     ]
-    email: models.EmailField = models.EmailField(unique=True)
-    create_time: models.DateTimeField = models.DateTimeField()
+    user = models.OneToOneField(
+        get_user_model(),
+        on_delete=models.CASCADE
+        )
     role: models.CharField = models.CharField(
         max_length=2,
         choices=ROLE,
         default=CUSTOMER,
     )
 
-    def __str__(self) -> models.EmailField:
-        return self.email
+    class Meta:
+        verbose_name_plural = 'UserProfiles'
+        db_table = 'user_profile'
+
+    def __str__(self):
+        return self.user.get_username()
