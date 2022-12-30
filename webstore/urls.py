@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .views import home, about_us, Register, CreateProduct, product_details
+from .views import home, about_us, Register, CreateProduct, ProductDetailView
 
 app_name = 'webstore'
 
@@ -19,7 +19,7 @@ urlpatterns = [
     path('product/create/', CreateProduct.as_view(), name='create_product'),
 
     # View
-    path('product-detail/', product_details, name = 'product_details'),
+    path('product/<int:pk>', ProductDetailView.as_view(), name='product_detail'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

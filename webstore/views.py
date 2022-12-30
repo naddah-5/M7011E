@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
 from webstore.models import Product
@@ -64,8 +64,7 @@ class CreateProduct(CreateView):
         form.save()
         return redirect(self.success_url)
 
-def product_details(request):
-    context = {
-        'title': 'Product'
-    }
-    return render(request, 'pages/product_detail.html', context=context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'pages/product_detail.html'
+    context_object_name = 'product'
