@@ -19,7 +19,7 @@ urlpatterns = [
     path('product/create/', CreateProduct.as_view(), name='create_product'),
 
     # View
-    path('product/<int:pk>', ProductDetailView.as_view(), name='product_detail'),
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
