@@ -1,5 +1,6 @@
 from django.urls import path
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 
 from .views import home, about_us, Register, CreateProduct, ProductDetailView
@@ -22,4 +23,4 @@ urlpatterns = [
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
 ]
 
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
