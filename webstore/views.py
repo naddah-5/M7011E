@@ -1,9 +1,14 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
+<<<<<<< HEAD
 from django.views.generic import CreateView
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+=======
+from django.views.generic import CreateView, DetailView
+>>>>>>> origin/69-product-page
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
 from webstore.models import Product, CartProduct
@@ -67,6 +72,7 @@ class CreateProduct(CreateView):
         form.save()
         return redirect(self.success_url)
 
+<<<<<<< HEAD
 def product_details(request):
     context = {
         'title': 'Product'
@@ -135,3 +141,21 @@ def delete_from_cart(request, **kwargs):
     if item:
         item.delete()
     return redirect(reverse('webstore:home'))
+=======
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'pages/product_detail.html'
+    context_object_name = 'product'
+
+class AddToCartView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        # Get product and quantity data from the form submission
+        product_id = request.POST['product_id']
+        quantity = request.POST['quantity']
+
+        # Add the product to the cart
+
+
+        # Redirect the user back to the product detail page
+        return redirect('webstore:product_detail', product_id=product_id)
+>>>>>>> origin/69-product-page

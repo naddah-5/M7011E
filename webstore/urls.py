@@ -1,8 +1,9 @@
 from django.urls import path
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .views import home, about_us, Register, CreateProduct, product_details, profile, add_to_cart, cart_summary, delete_from_cart
+from .views import home, about_us, Register, CreateProduct, ProductDetailView, AddToCartView, product_details, profile, add_to_cart, cart_summary, delete_from_cart
 
 app_name = 'webstore'
 
@@ -28,7 +29,10 @@ urlpatterns = [
     path('product/create/', CreateProduct.as_view(), name='create_product'),
 
     # View
-    path('product-detail/', product_details, name = 'product_details'),
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+
+    # Functions
+    path('cart/add/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart')
 ]
 
-urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
