@@ -1,0 +1,43 @@
+<!--
+  Based on the example register code from Sandeep Patil
+-->
+
+{% extends "layouts/public_base.html" %}
+
+{% block content %}
+
+<div class="row py-5">
+    <div class="col-xs-12">
+      <div class="form">
+        <form method="post"
+              action="{% url 'webstore:profile_update' %}"
+        >
+          {% csrf_token %}
+          <div class="form-group
+                      {% if user_form.username.errors %}
+                        has-error
+                      {% endif %}"
+          >
+            <label class="control-label" for="username">Username</label>
+            <input class="form-control" type="text" id="username"
+                    placeholder="Username" name="username"
+                    value="{{ user_form.username.value|default_if_none:"" }}">
+            {% if user_form.username.errors %}
+              <div class="form-group has-error">
+                <div class="control-label">
+                  {{ user_form.username.errors }}
+                </div>
+              </div>
+            {% endif %}
+            </div>
+            <br>
+          <div class="form-group">
+            <input class="form-control btn btn-primary" type="submit"
+                    value="Update Profile">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

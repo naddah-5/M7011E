@@ -10,8 +10,3 @@ class CartProduct(models.Model):
 
     class Meta:
         unique_together: tuple[Literal['user_id'], Literal['product_id']] = ('user_id', 'product_id')
-
-    def getProducts(self):
-        for item in self.product:
-            print(item)
-        return None
