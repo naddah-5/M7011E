@@ -1,0 +1,64 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <section class="py-5 text-center">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Products</h1>
+        <p class="lead text-muted">Contains all our products!</p>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Products -->
+{% for row in products %}
+<div class="row mx-n2 mx-sm-n3">
+  {% for product in row %}
+  <div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+    <!-- Product -->
+    <div class="card text-center h-100">
+      <div class="position-relative">
+        <img class="card-img-top" src="{{ product.thumbnail.url }}" alt="Image Description">
+      </div>
+  
+      <div class="card-body pt-4 px-4 pb-0">
+        <div class="mb-2">
+          <a class="d-inline-block text-secondary small font-weight-medium mb-1" href="#">CATEGORY!!!!!</a>
+          <h4 class="font-size-1 font-weight-normal">
+            <a class="text-secondary" href="{% url 'webstore:product_detail' product.id %}">{{product.name}}</a>
+          </h4>
+          <div class="d-block">
+            <span class="font-weight-medium">${{product.price}}</span>
+          </div>
+          <div class="d-block">
+            <span class="font-weight-medium">Stock: {{product.stock}}</span>
+          </div>
+        </div>
+      </div>
+  
+      <div class="card-footer border-0 pt-0 pb-4 px-4">
+        <div class="mb-3">
+          <a class="d-inline-flex align-items-center small" href="#"> 
+            <div class="text-warning mr-2">
+              <small class="fas fa-star"></small>
+              <small class="fas fa-star"></small>
+              <small class="fas fa-star"></small>
+              <small class="fas fa-star"></small>
+              <small class="fas fa-star"></small>
+            </div>
+            <span class="text-secondary">9</span>
+          </a>
+        </div>
+        <a href="{% url 'webstore:add_to_cart' product.id %}" type="button" class="btn btn-sm btn-outline-primary btn-sm-wide btn-pill transition-3d-hover">Add to Cart</a>
+      </div>
+    </div>
+    <!-- End Product -->
+  </div>
+  {% endfor %}
+  </div>
+  <!-- End Products -->
+  {% endfor %}
+{% endblock %}

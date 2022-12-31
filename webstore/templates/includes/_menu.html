@@ -14,7 +14,19 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'webstore:about_us' %}">About Us</a>
           </li>
-          
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'webstore:product_list' %}">Products</a>
+          </li>
+          {% if request.user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'webstore:profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'webstore:cart' %}">Cart</a>
+            </li>
+          {% endif %}
+
+
           <!-- Right Side -->
         </ul>
         <ul class="navbar-nav ml-auto">
