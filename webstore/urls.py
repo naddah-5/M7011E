@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .views import home, about_us, Register, CreateProduct, ProductDetailView
+from .views import home, about_us, Register, CreateProduct, ProductDetailView, AddToCartView
 
 app_name = 'webstore'
 
@@ -21,6 +21,9 @@ urlpatterns = [
 
     # View
     path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+
+    # Functions
+    path('cart/add/<int:product_id>/', AddToCartView.as_view(), name='add_to_cart')
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

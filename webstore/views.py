@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import CreateView, DetailView
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
-from webstore.models import Product
+from webstore.models import Product, CartProduct
 
 # Create your views here.
 def home(request):
@@ -68,3 +69,15 @@ class ProductDetailView(DetailView):
     model = Product
     template_name = 'pages/product_detail.html'
     context_object_name = 'product'
+
+class AddToCartView(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        # Get product and quantity data from the form submission
+        product_id = request.POST['product_id']
+        quantity = request.POST['quantity']
+
+        # Add the product to the cart
+
+
+        # Redirect the user back to the product detail page
+        return redirect('webstore:product_detail', product_id=product_id)
