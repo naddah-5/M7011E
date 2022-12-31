@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import CreateView
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
-from webstore.models import Product
+from webstore.models import Product, CartProduct
 
 # Create your views here.
 def home(request):
@@ -69,3 +72,66 @@ def product_details(request):
         'title': 'Product'
     }
     return render(request, 'pages/product_detail.html', context=context)
+
+@login_required
+def profile(request):
+    user = request.user
+    print(get_user_cart(request))
+    context = {
+        'user': user,
+    }
+    return render(request, 'pages/profile.html', context=context)
+
+def get_user_cart(request):
+    # get user
+    user = request.user
+    # filter CartProduct to get the users cart
+    cart = CartProduct.objects.filter(user=user)
+    if cart.exists():
+        return cart
+    return 0
+
+def get_total_cart_sum(cart):
+    total = 0
+    for item in cart:
+        total += item.product.price * item.quantity
+    return total
+
+@login_required
+def cart_summary(request):
+    userCart = get_user_cart(request)
+    amount = get_total_cart_sum(userCart)
+    print(amount)
+
+    context = {
+        'cart': userCart,
+        'amount': amount
+    }
+    return render(request, 'pages/cart.html', context)
+
+@login_required
+def add_to_cart(request, quantity=1, **kwargs):
+    user = request.user
+    # get product from product ID that is going to get inserted to user cart
+    # http://127.0.0.1:8000/add-to-cart/1 (1 describes the product id)
+    product = Product.objects.filter(id=kwargs.get('product_id', "")).first()
+    userProduct, status = CartProduct.objects.get_or_create(user=user, product=product)
+
+    if status:
+        userProduct.save()
+        print("Product id:" + str(kwargs.get('product_id', "")) + "has been added to user: " + str(user) + "s cart")
+    else: 
+        # the user already has this product in cart
+        userProduct.quantity += quantity
+        userProduct.save()
+        print("User already has this item...")
+        print("User now has quantity amount:" + str(userProduct.quantity))
+
+    return render(request, 'pages/profile.html')
+
+@login_required
+def delete_from_cart(request, **kwargs):
+    item = CartProduct.objects.filter(product_id=kwargs.get('product_id', "")).first()
+    if item:
+        item.delete()
+    return redirect(reverse('webstore:home'))

@@ -1,0 +1,85 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  Login page.
+{% endblock %}
+
+{% block keywords %}
+  login
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+<br >
+<h1 class="text-center">
+    Cart
+</h1>
+<br>
+<section>
+    <div class="row">
+     <table class="table text-center">
+       <tr class="text-center">
+         <th>Number</th>
+         <th>Name</th>
+         <th>Quantity</th>
+         <th>Total Price</th>
+
+       </tr>
+       {% for item in cart %}
+         <tr>
+           <td>{{ forloop.counter }}</td>
+           <td>
+             {{ item.product.name }}
+             <span class="pull-right">
+               <a href="{% url 'webstore:delete_item' item.product.id %}" data-balloon="remove this item from cart" class="text-danger" onclick="return confirm_delete();">
+                 <i class="fas fa-trash"></i>
+               </a>
+             </span>
+           </td>
+           <td>{{ item.quantity }}</td>
+           <td>{{ item.product.price }}</td>
+         </tr>
+       {% empty %}
+         <tr>
+           <td colspan= 3> You have not added any items yet.</td>
+         </tr>
+       {% endfor %}
+       <tr>
+         {% if amount != None %}
+         <td colspan=3>
+           <strong class="pull-right">Order Total:</strong>
+         </td>
+         
+         <td colspan= 1>
+           <strong>${{ amount }}</strong>
+         </td>
+         {% endif %}
+       </tr>
+       <tr>
+         <td colspan=3 >
+           <a href="{% url 'webstore:home' %}" class="btn btn-warning pull-left">
+             {% if order %}Continue Shopping{% else %}Add Items to Cart {% endif %}
+           </a> 
+         </td>
+         <td colspan=1>
+           {% if cart %}
+             <a href="{% url 'webstore:home' %}" class="pull-right btn btn-primary">Order!</a>
+           {% endif %}
+         </td>
+       </tr>
+     </table>
+      
+    </div>
+  </section>
+
+  <script>
+    function confirm_delete(){
+      return confirm("Are you sure you want to remove this item from your cart?");
+    }
+  </script>
+ {% endblock %}
+ 
+

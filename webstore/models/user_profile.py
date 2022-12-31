@@ -14,7 +14,8 @@ class UserProfile(models.Model):
     ]
     user = models.OneToOneField(
         get_user_model(),
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,
+        related_name='profile'
         )
     role: models.CharField = models.CharField(
         max_length=2,
