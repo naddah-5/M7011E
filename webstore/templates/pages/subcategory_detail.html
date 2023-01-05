@@ -1,23 +1,36 @@
 {% extends 'layouts/public_base.html' %}
 {% load static %}
+{% block description %}
+  Login page.
+{% endblock %}
+
+{% block keywords %}
+  login
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
 
 {% block content %}
 
-  <section class="py-5 text-center">
+<section class="py-5 text-center">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Products</h1>
-        <p class="lead text-muted">Contains all our products!</p>
+        <h1 class="fw-light">Sub Categories Detail</h1>
+        <p class="lead text-muted">Detail of the Sub Category!</p>
         <p>
-          <a href="{% url 'webstore:home' %}" class="btn btn-primary my-2">Home</a>
-          <a href="{% url 'webstore:categories' %}" class="btn btn-secondary my-2">Categories</a>
+          <a href="{% url 'webstore:sub-category' %}" class="btn btn-primary my-2">Sub Categories</a>
         </p>
       </div>
     </div>
   </section>
 
-
-<!-- Products -->
+{% if products %}
+<hr>
+<div class="row py-lg-5">
+    <h1 class="fw-light">Products in Sub Category</h1>
+    </div>
 {% for row in products %}
 <div class="row mx-n2 mx-sm-n3">
   {% for product in row %}
@@ -67,4 +80,8 @@
   </div>
   <!-- End Products -->
   {% endfor %}
-{% endblock %}
+{% endif %}
+
+ {% endblock %}
+ 
+

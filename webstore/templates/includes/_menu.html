@@ -17,6 +17,30 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'webstore:product_list' %}">Products</a>
           </li>
+
+          <li class="dropdown nav-item">
+            <a class="dropdown-toggle nav-link" href="#" id="multilevelDropdownMenu1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+            <ul class="dropdown-menu" aria-labelledby="multilevelDropdownMenu1">
+                {% for key, value in categories.items %}
+                {% if value %}
+                <li class="dropdown dropend">
+                  <a class="dropdown-item dropdown-toggle" href="{% url 'webstore:category_details' key.id %}" id="multilevelDropdownMenu1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{key}}</a>
+                  <ul class="dropdown-menu" aria-labelledby="multilevelDropdownMenu2">
+                      {% for x in value %}
+                      <li><a class="dropdown-item" href="{% url 'webstore:sub_category_details' x.id %}">{{x}}</a></li>
+                      {% endfor %}
+                  </ul>
+                </li>
+                {% else %}
+                <li><a class="dropdown-item" href="{% url 'webstore:category_details' key.id %}">{{key}}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'webstore:sub-category' %}">Sub Categories</a>
+        </li>
           {% if request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'webstore:profile' %}">Profile</a>
@@ -30,6 +54,11 @@
           <!-- Right Side -->
         </ul>
         <ul class="navbar-nav ml-auto">
+          {% if request.user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+          </li>
+          {% endif %}
           {% if request.user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'webstore:logout' %}">Logout</a>
@@ -46,3 +75,17 @@
       </div>
     </div>
   </nav>
+
+  <script>
+    let dropdowns = document.querySelectorAll('.dropdown-toggle')
+    dropdowns.forEach((dd)=>{
+        dd.addEventListener('click', function (e) {
+            var el = this.nextElementSibling
+            el.style.display = el.style.display==='block'?'none':'block'
+        })
+        dd.addEventListener('click', function (e) {
+            var el = this.nextElementSibling
+            el.style.display = el.style.display==='block'?'block':'none'
+        })
+    })
+  </script>

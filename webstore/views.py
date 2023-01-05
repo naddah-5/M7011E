@@ -6,22 +6,44 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView
+from django.utils.timezone import now
+from datetime import timedelta
+
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
-from webstore.models import Product, CartProduct
+from webstore.models import Product, CartProduct, Category, Subcategory, InCategory, InSubcategory, Order, OrderProduct, Video
+
+def get_categories():
+    categories = Category.objects.all()
+    catDict = {}
+    for cat in categories:
+        try: #Category has sub category
+            subCategories = Subcategory.objects.filter(category=cat).all()
+            catDict[cat] = subCategories
+        except: #Category does not have sub category
+            catDict[cat] = []
+    return catDict
 
 # Create your views here.
 def home(request):
     context = {
-        'title': 'Home'
+        'title': 'Home',
+        'categories': get_categories(),
     }
     return render(request, 'pages/home.html', context=context)
 
 
 # Create your views here.
 def about_us(request):
+    videos = Video.objects.all()
+
+
     context = {
-        'title': 'About Us'
+        'videos': videos,
+        'title': 'About Us',
+        'categories': get_categories(),
     }
     return render(request, 'pages/about_us.html', context=context)
 
@@ -35,7 +57,8 @@ class Register(View):
         Show the NewUserForm.
         """
         context = {
-            'form': NewUserForm
+            'form': NewUserForm,
+            'categories': get_categories(),
         }
         return render(request, 'pages/register.html', context)
 
@@ -52,7 +75,8 @@ class Register(View):
             return redirect('/')
         
         context = {
-            'form': form
+            'form': form,
+            'categories': get_categories(),
         }
         """
         If the form is invalid we redirect back to the register page with the form as context.
@@ -69,17 +93,54 @@ class CreateProduct(CreateView):
         form.save()
         return redirect(self.success_url)
 
-def product_details(request):
-    context = {
-        'title': 'Product'
-    }
-    return render(request, 'pages/product_detail.html', context=context)
+
+def get_order_price(id):
+    order = Order.objects.filter(id=id).first()
+    orderProducts = OrderProduct.objects.filter(order=order).all()
+
+    amount = 0
+
+    for item in orderProducts:
+        amount += item.price
+
+    return amount
+
+def get_order_product(id):
+    order = Order.objects.filter(id=id).first()
+    orderProducts = OrderProduct.objects.filter(order=order).all()
+
+    lst = []
+
+    for item in orderProducts:
+        lst.append(item)
+    return lst
+
 
 @login_required
 def profile(request):
     user = request.user
+
+    orders = Order.objects.filter(customer=user).all()
+
+    lst = []
+
+    for item in orders:
+        lst.append([
+            item.id,
+            item.order_date,
+            get_order_price(item.id),
+            item.status,
+            get_order_product(item.id),
+        ])
+
+    print(orders)
+
+
+
     context = {
+        'order': lst,
         'user': user,
+        'categories': get_categories(),
     }
     return render(request, 'pages/profile.html', context=context)
 
@@ -101,7 +162,7 @@ def get_total_cart_sum(cart):
 @login_required
 def cart_summary(request):
     userCart = get_user_cart(request)
-    
+
     amount = 0
     if(userCart):
         amount = get_total_cart_sum(userCart)
@@ -109,7 +170,8 @@ def cart_summary(request):
 
     context = {
         'cart': userCart,
-        'amount': amount
+        'amount': amount,
+        'categories': get_categories(),
     }
     return render(request, 'pages/cart.html', context)
 
@@ -165,16 +227,40 @@ class ProductDetailView(DetailView):
     template_name = 'pages/product_detail.html'
     context_object_name = 'product'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        #product = Product.objects.filter(id=self.kwargs['pk'])
+        categories = InCategory.objects.filter(product=self.model.objects.filter(id=self.kwargs['pk']).first()).all()
+        catName = []
+        for cat in categories:
+            if(cat.product.name not in catName):
+                catName.append(cat)
+
+        context['category'] = catName
+        return context
 
 def to_matrix(l, n):
     return [l[i:i+n] for i in range(0, len(l), n)]
 
 def product_list(request):
     products = Product.objects.all()
-    products = to_matrix(products, 4)
-    
+
+    lst = []
+    for x in range(len(products)):
+        lst.append([products[x].thumbnail.url, 
+                    InCategory.objects.filter(product=products[x]).first(), 
+                    products[x].id,
+                    products[x].name,
+                    products[x].price,
+                    products[x].stock])
+
+    products = to_matrix(lst, 4)
+
     context = {
         'products': products,
+        'categories': get_categories(),
     }
     return render(request, "pages/products.html", context)
 
@@ -186,7 +272,8 @@ class ProfileUpdate(LoginRequiredMixin, View):
         )
         context = {
             'user_form': user_form,
-            'user_profile_form': user_profile_form
+            'user_profile_form': user_profile_form,
+            'categories': get_categories(),
         }
         return render(request, 'pages/update.html', context)
 
@@ -201,6 +288,163 @@ class ProfileUpdate(LoginRequiredMixin, View):
 
         context = {
             'user_form': user_form,
-            'user_profile_form': user_profile_form
+            'user_profile_form': user_profile_form,
+            'categories': get_categories(),
         }
         return render(request, 'pages/update.html', context)
+
+def category_product_list(request):
+    categories = Category.objects.all()
+
+    categories = to_matrix(categories, 4)
+
+    context = {
+        'category': categories,
+        'categories': get_categories(),
+    }
+
+    return render(request, 'pages/categories.html', context)
+
+def category_detail(request, **kwargs):
+    category = Category.objects.filter(id=kwargs.get('category_id', "")).first()
+    print(category)
+
+    products = InCategory.objects.filter(category=category)
+
+    subCategories = Subcategory.objects.filter(category=category).all()
+
+    lst = []
+    for x in range(len(products)):
+        try:
+            lst.append([products[x].product.thumbnail.url, 
+                        InCategory.objects.filter(product=products[x].product).first(), 
+                        products[x].product.id,
+                        products[x].product.name,
+                        products[x].product.price,
+                        products[x].product.stock])
+        except:
+            continue
+
+    for x in range(len(subCategories)):
+        try:
+            subproduct = InSubcategory.objects.filter(subcategory=subCategories[x]).all()
+            if(subproduct):
+                for item in subproduct:
+                    if(item.product not in products):
+                        print(item.product.thumbnail.url)
+                        lst.append([item.product.thumbnail.url, 
+                                    InCategory.objects.filter(product=products[x].product).first(), 
+                                    item.product.id,
+                                    item.product.name,
+                                    item.product.price,
+                                    item.product.stock])
+        except:
+            print("X")
+            continue
+
+    lst = to_matrix(lst, 4)
+
+
+    subCategories = to_matrix(subCategories, 4)
+    
+    
+
+    context = {
+        'products': lst,
+        'subcategories': subCategories,
+        'categories': get_categories(),
+    }
+
+    return render(request, 'pages/category_detail.html', context)
+
+def sub_category(request):
+    subCategories = Subcategory.objects.all()
+
+    subCategories = to_matrix(subCategories, 4)
+
+    context = {
+        'category': subCategories,
+        'categories': get_categories(),
+    }
+
+    return render(request, 'pages/subcategory.html', context)
+
+
+def sub_category_detail(request, **kwargs):
+    try:
+        subCategories = Subcategory.objects.filter(id=kwargs.get('sub_category_id', "")).first()
+        products = InSubcategory.objects.filter(subcategory=subCategories).all()
+    except:
+        pass
+
+    lst = []
+
+    for item in products:
+        print(item.product.thumbnail.url)
+        lst.append([item.product.thumbnail.url, 
+        InCategory.objects.filter(product=item.product).first(), 
+        item.product.id,
+        item.product.name,
+        item.product.price,
+        item.product.stock])
+
+    lst = to_matrix(lst, 4)
+
+    context = {
+        'products': lst,
+        'categories': get_categories(),
+    }
+    return render(request, 'pages/subcategory_detail.html', context)
+
+@login_required
+def order(request):
+    userCart = get_user_cart(request)
+
+    print(userCart)
+
+    amount = 0
+    if(userCart):
+        amount = get_total_cart_sum(userCart)
+
+    if request.method == 'POST':
+        order = Order.objects.create(
+            order_date = now(),
+            customer = request.user,
+            address = request.POST.get('address'),
+            delivery = now() + timedelta(days=5),
+        )
+        for item in userCart:
+            orderProduct = OrderProduct.objects.create(
+                product = item.product,
+                order = order,
+                quantity = item.quantity,
+                price = item.product.price * item.quantity
+            )
+            item.delete()
+
+    context = {
+        'cart': userCart,
+        'amount': amount,
+        'categories': get_categories(),
+    }
+
+    return render(request, 'pages/order.html', context)
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(data=request.POST, user=request.user)
+
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request=request, user=request.user)
+            return redirect(reverse("webstore:profile"))
+        else:
+            return redirect(reverse("webstore:change_password"))
+    else:
+        form = PasswordChangeForm(user=request.user)
+        context = {
+            'form': form
+        }
+        return render(request, 'pages/change_password.html', context)
+ 

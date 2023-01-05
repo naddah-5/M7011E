@@ -1,0 +1,61 @@
+{% extends 'layouts/public_base.html' %}
+{% load static %}
+{% block description %}
+  Login page.
+{% endblock %}
+
+{% block keywords %}
+  login
+{% endblock %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block content %}
+
+<section class="py-5 text-center">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Categories</h1>
+        <p class="lead text-muted">Contains all our categories!</p>
+        <p>
+          <a href="{% url 'webstore:home' %}" class="btn btn-primary my-2">Home</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+<!-- Products -->
+{% for row in category %}
+<div class="row mx-n2 mx-sm-n3">
+  {% for cat in row %}
+  <div class="col-6 col-lg-3 px-2 px-sm-3 mb-3 mb-sm-5">
+    <!-- Product -->
+    <div class="card text-center h-100">
+      <div class="position-relative">
+        <a class="text-secondary" href="{% url 'webstore:category_details' cat.id %}">
+            <img class="card-img-top" src="{{ cat.image.url }}" alt="Image Description">
+        </a>
+      </div>
+  
+      <div class="card-body pt-4 px-4 pb-0">
+        <div class="mb-2">
+          <h4 class="font-size-1 font-weight-normal">
+            <a class="text-secondary" href="{% url 'webstore:category_details' cat.id %}">{{cat.name}}</a>
+          </h4>
+        </div>
+      </div>
+  
+    </div>
+    <!-- End Product -->
+  </div>
+  {% endfor %}
+  </div>
+  <!-- End Products -->
+  {% endfor %}
+
+ {% endblock %}
+ 
+
