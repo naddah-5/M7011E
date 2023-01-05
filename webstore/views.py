@@ -17,15 +17,18 @@ from webstore.forms import NewUserForm, UserForm, ProductForm
 from webstore.models import Product, CartProduct, Category, Subcategory, InCategory, InSubcategory, Order, OrderProduct, Video
 
 def get_categories():
-    categories = Category.objects.all()
-    catDict = {}
-    for cat in categories:
-        try: #Category has sub category
-            subCategories = Subcategory.objects.filter(category=cat).all()
-            catDict[cat] = subCategories
-        except: #Category does not have sub category
-            catDict[cat] = []
-    return catDict
+    try:
+        categories = Category.objects.all()
+        catDict = {}
+        for cat in categories:
+            try: #Category has sub category
+                subCategories = Subcategory.objects.filter(category=cat).all()
+                catDict[cat] = subCategories
+            except: #Category does not have sub category
+                catDict[cat] = []
+        return catDict
+    except:
+        pass
 
 # Create your views here.
 def home(request):
