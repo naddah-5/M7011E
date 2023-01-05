@@ -28,3 +28,4 @@ Once that is done we are ready to start the server by running the command:
 > python manage.py runserver
 ```
 
+You can then open the site by holding the ctrl-key and left-clicking the localhost ip-address.
