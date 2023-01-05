@@ -31,7 +31,11 @@
             <a class="btn btn-warning btn-xs pull-right" href="{% url 'webstore:profile_update' %}"> 
               Update Profile
             </a>
+            <a class="btn btn-warning btn-xs pull-right" href="{% url 'webstore:change_password' %}"> 
+              Change Password
+            </a>
           </h3>
+          
         </div>
         <table class="table table-striped">
           <tbody>
@@ -56,4 +60,98 @@
       </div>
     </div>
   </div>
+
+  
+<section>
+  <div class="row">
+   <table class="table text-center">
+     <tr class="text-center">
+       <th>Order Number</th>
+       <th>Date</th>
+       <th>Price</th>
+       <th>Status</th>
+
+     </tr>
+     {% if order %}
+     {% for item in order %}
+       <tr>
+         <td><div class="asdasd">{{item.0}}
+          <span class="tooltiptext">
+            <table class="text-light table text-center">
+              <tr class="text-light text-center">
+                <td>Name</td>
+                <td>Quantity</td>
+                <td>Price</td>
+              </tr>
+              {% for prod in item.4 %}
+              <tr class="text-light text-center">
+                <td><a class="text-secondary" href="{% url 'webstore:product_detail' prod.product.id %}">{{prod.product.name}}</a></td>
+                <td>{{prod.quantity}}</td>
+                <td>{{prod.price}}</td>
+              </tr>
+              {% endfor %}
+            </table>
+          </span>
+        </div></td>
+         <td>
+           {{ item.1 }}
+         </td>
+         <td>{{ item.2 }}</td>
+         <td>{{ item.3 }}</td>
+       </tr>
+     {% empty %}
+       <tr>
+         <td colspan= 3> You have not added any items yet.</td>
+       </tr>
+     {% endfor %}
+     <tr>
+       {% if amount != None %}
+       <td colspan=3>
+         <strong class="pull-right">Order Total:</strong>
+       </td>
+       
+       <td colspan= 1>
+         <strong>${{ amount }}</strong>
+       </td>
+       {% endif %}
+     </tr>
+     {% endif %}
+   </table>
+    
+  </div>
+</section>
+
+
+<style>
+  .asdasd {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .asdasd .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transi  tion: opacity 1s;
+  }
+  
+  .asdasd:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+</style>
+
 {% endblock %}

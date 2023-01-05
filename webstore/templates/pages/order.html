@@ -1,19 +1,51 @@
 {% extends 'layouts/public_base.html' %}
 {% load static %}
-{% block description %}
-  Login page.
-{% endblock %}
-
-{% block keywords %}
-  login
-{% endblock %}
-
-{% block title %}
-  {{ title }}
-{% endblock %}
 
 {% block content %}
 
+<section class="py-5 text-center">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Order Page</h1>
+        <p class="lead text-muted">Checkout here!</p>
+      </div>
+    </div>
+  </section> 
 
+<section>
+    <div class="row" id="tablerow">
+    <div class="col-md-8 col-xs-12">
+      <table class="table">
+        <tr>
+          <td>
+            {% for item in cart %}
+              <tr>
+                <td>{{ item.product.name }}</td>
+                <td>x{{ item.quantity }}</td>
+                <td>${{ item.product.price }}</td>
+              </tr>
+            {% endfor %}
+          </td>
+        </tr>
+        <tr>
+        <td><strong>Order Total</strong> </td>  
+          <td><strong>~</strong> </td>
+          <td> <strong>${{ amount }}</strong></td>
+        </tr>
+      </table>
+
+      <form action="." method="post">
+        {% csrf_token %}
+        <strong>Adress:</strong> 
+        <input type="text"  name="address" class="form-control"required>
+        <br>
+        <span>
+          <input type="submit" class="btn btn-warning pull-right" value="Complete Order!"> 
+        </span>
+      </form>
+
+    </div>
+   </div>
+  </section>
 
 {% endblock %}

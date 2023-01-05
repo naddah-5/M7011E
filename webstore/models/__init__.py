@@ -20,3 +20,4 @@ from .category import Category
 from .subcategory import Subcategory
 from .in_category import InCategory
 from .in_subcategory import InSubcategory
+from .video import Video

@@ -1,4 +1,5 @@
 {% extends 'layouts/public_base.html' %}
+{% load embed_video_tags %}
 {% load static %}
 
 {% block content %}
@@ -6,11 +7,21 @@
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">About Us</h1>
-        <p class="lead text-muted">This is the about us page...</p>
+        <p class="lead text-muted">A little bit about us!</p>
         <p>
-          <a href="{% url 'webstore:home' %}" class="btn btn-primary my-2">Who is the Author?</a>
+          <a href="{% url 'webstore:home' %}" class="btn btn-primary my-2">Home</a>
         </p>
       </div>
     </div>
   </section>
+
+  <h1 class="mb-5">Videos</h1>
+  <div class="d-flex flex-wrap">
+  {% for item in videos %}
+    <div class="px-3 mb-5">
+    {% video item.url '426x240' %}
+    <div class ="d-flex justify-content-start">{{ item.title }}</div>
+    </div >
+  {% endfor %}
+  </div>
 {% endblock %}
