@@ -2,6 +2,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.admin.views.decorators import staff_member_required
 
 from .views import home, about_us, Register, CreateProduct, ProductDetailView, profile, add_to_cart, cart_summary, delete_from_cart, product_list, ProfileUpdate, get_categories, category_product_list, category_detail, sub_category, sub_category_detail, order, change_password
 
@@ -38,7 +39,7 @@ urlpatterns = [
     path('profile/change-password/', change_password, name='change_password'),
     
     # Admin
-    path('product/create/', CreateProduct.as_view(), name='create_product'),
+    path('product/create/', staff_member_required(CreateProduct.as_view()), name='create_product'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

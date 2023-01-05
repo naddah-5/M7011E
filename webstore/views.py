@@ -11,6 +11,7 @@ from datetime import timedelta
 
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.admin.views.decorators import staff_member_required
 
 from webstore.forms import NewUserForm, UserForm, ProductForm
 from webstore.models import Product, CartProduct, Category, Subcategory, InCategory, InSubcategory, Order, OrderProduct, Video
