@@ -29,3 +29,10 @@ python manage.py runserver
 ```
 
 You can then open the site by holding the ctrl-key and left-clicking the localhost ip-address.
+
+Note that the site will be empty, and needs to be populated. A good way to start this is by creating a super-user. You can do this by running the command:
+```
+python manage.py createsuperuser
+```
+
+This will allow you to control all aspects of the website.
